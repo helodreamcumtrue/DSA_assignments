@@ -1,39 +1,121 @@
-#include <iostream>
-using namespace std;
-class stIMP {
-    int st[10];
-    int curr=-1;
-public:
-    int top() {
-        if (curr==-1) cout<<"There are no elements in the stack!";
-        else {
-            return st[curr];
-        }
+#include <stdio.h>
+#define MAXLEN 100
+
+typedef struct {
+
+    int element[MAXLEN];
+    int top;
+
+}stack;
+
+
+stack init()
+{
+    stack S;
+    S.top=-1;
+    return S;
+}
+
+int isEmpty(stack S)
+{
+    if(S.top==-1)
+        return 1;
+    else
+        return 0;
+}
+
+int isFull(stack S)
+{
+    if(S.top==MAXLEN-1)
+        return 1;
+    else
+        return 0;
+}
+
+int top (stack S)
+{
+ if (isEmpty(S))
+    printf("Empty stack n");
+ else
+    return S.element[S.top];
+}
+
+stack push(stack S,int x)
+{
+    if(isFull(S))
+    {
+        printf("OVERFLOW\n");;
     }
-    void push(int x) {
-        curr++;
-        if (curr==10) {
-            curr--;
-            cout<<"The stack is full!";
-        }
-        else {
-            st[curr]=x;
-        }
+    else{
+        ++S.top;
+        S.element[S.top]=x;
     }
-    void pop() {
-        if (curr==-1) cout<<"There is no element in the stack to pop!";
-        else curr--;
+    return S;
+}
+
+
+stack pop(stack S)
+{
+    if(isEmpty(S))
+    {
+        printf("UNDERFLOW\n");
     }
-    int size() {
-        return curr+1;
+    else{
+        --S.top;
     }
-};
-int main() {
-    stIMP st;
-    st.push(10);
-    st.push(20);
-    cout<<st.top();
-    st.pop();
-    cout<<st.top();
-    return 0;
+    return S;
+}
+
+void print (stack S)
+{
+int i;
+for (i=S.top; i>=0; i--)
+printf("%d ",S.element[i]);
+}
+
+
+
+int main ()
+{   int choice=0;
+    stack S;
+    S=init();
+    printf("*********Stack operations using array*********");
+
+printf("\n----------------------------------------------\n");
+    while(choice != 4)
+    {
+        printf("Chose one from the below options...\n");
+        printf("\n1.Push\n2.Pop\n3.Show\n4.Exit");
+        printf("\n Enter your choice \n");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            {   int el;
+                printf("Enter an element to enter into stack \n");
+                scanf("%d",&el);
+                S=push(S,el);
+                break;
+            }
+            case 2:
+            {
+                S=pop(S);
+                break;
+            }
+            case 3:
+            {
+                print(S);
+                break;
+            }
+            case 4:
+            {
+                printf("Exiting....");
+                break;
+            }
+            default:
+            {
+                printf("Please Enter valid choice ");
+            }
+        };
+    }
 }
